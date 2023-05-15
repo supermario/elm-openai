@@ -1,4 +1,7 @@
-module OpenAI exposing (Config, withConfig)
+module OpenAI exposing
+    ( Config, withConfig
+    , withConfig_
+    )
 
 {-| This package is NOT intended to be run on the browser since `apiKey` will be exposed. Call it from a server like [elm-webapp](https://github.com/choonkeat/elm-webapp) or [lamdera.com](https://lamdera.com) instead.
 
@@ -76,5 +79,20 @@ withConfig config req =
             req.headers
                 ++ [ Http.header "Authorization" ("Bearer " ++ config.apiKey)
                    , Http.header "OpenAI-Organization" config.organizationId
+                   ]
+    }
+
+
+
+-- withConfig_ : Config -> Ext.Http.TaskInput x a -> Ext.Http.TaskInput x a
+
+
+withConfig_ config req =
+    { req
+        | url = Maybe.withDefault "https://api.openai.com/v1" config.baseUrl ++ req.url
+        , headers =
+            req.headers
+                ++ [ ( "Authorization", "Bearer " ++ config.apiKey )
+                   , ( "OpenAI-Organization", config.organizationId )
                    ]
     }

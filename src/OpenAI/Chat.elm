@@ -25,17 +25,33 @@ import Time
 
 {-| -}
 type ModelID
-    = GPT3_5_Turbo
-    | GPT3_5_Turbo_0301
+    = Gpt_4
+    | Gpt_4_0314
+    | Gpt_4_32k
+    | Gpt_4_32k_0314
+    | Gpt_3_5_turbo
+    | Gpt_3_5_turbo_0301
 
 
 stringFromModelID : ModelID -> String
 stringFromModelID modelID =
     case modelID of
-        GPT3_5_Turbo ->
+        Gpt_4 ->
+            "gpt-4"
+
+        Gpt_4_0314 ->
+            "gpt-4-0314"
+
+        Gpt_4_32k ->
+            "gpt-4-32k"
+
+        Gpt_4_32k_0314 ->
+            "gpt-4-32k-0314"
+
+        Gpt_3_5_turbo ->
             "gpt-3.5-turbo"
 
-        GPT3_5_Turbo_0301 ->
+        Gpt_3_5_turbo_0301 ->
             "gpt-3.5-turbo-0301"
 
 

@@ -1,6 +1,7 @@
 module OpenAI.Embeddings exposing
     ( create
     , Input, Output, Data, Usage
+    , create_
     )
 
 {-|
@@ -129,5 +130,31 @@ create input =
     , resolver =
         Http.stringResolver
             (Ext.Http.jsonResolver decodeOutput >> Result.map .data)
+    , timeout = Nothing
+    }
+
+
+create_ :
+    Input
+    -> (a -> resolver)
+    ->
+        { method : String
+        , headers : List ( String, String )
+        , url : String
+        , body : Json.Encode.Value
+        , resolver : Json.Decode.Decoder Output
+        , timeout : Maybe Int
+        }
+create_ input resolver =
+    { method = "POST"
+    , headers = []
+    , url = "/embeddings"
+    , body = encodeInput input
+    , resolver =
+        decodeOutput
+
+    -- BackendTask.Http.jsonResolver
+    -- decodeOutput
+    -- >> Result.map .data
     , timeout = Nothing
     }
