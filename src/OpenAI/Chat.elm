@@ -31,6 +31,7 @@ type ModelID
     | Gpt_4_32k_0314
     | Gpt_3_5_turbo
     | Gpt_3_5_turbo_0301
+    | Custom String
 
 
 stringFromModelID : ModelID -> String
@@ -53,6 +54,9 @@ stringFromModelID modelID =
 
         Gpt_3_5_turbo_0301 ->
             "gpt-3.5-turbo-0301"
+
+        Custom s ->
+            s
 
 
 {-| -}
