@@ -46,7 +46,7 @@ type alias Tool =
     { type_ : Maybe String
     , name : Maybe String
     , description : Maybe String
-    , parameters : Maybe Encode.Value
+    , parameters : Maybe String
     }
 
 
@@ -112,7 +112,7 @@ encodeTool tool =
             [ Maybe.map (\a -> ( "type", Encode.string a )) tool.type_
             , Maybe.map (\a -> ( "name", Encode.string a )) tool.name
             , Maybe.map (\a -> ( "description", Encode.string a )) tool.description
-            , Maybe.map (\a -> ( "parameters", a )) tool.parameters
+            , Maybe.map (\a -> ( "parameters", Encode.string a )) tool.parameters
             ]
         )
 
@@ -188,7 +188,7 @@ decodeTool =
         (Decode.field "type" (Decode.maybe Decode.string))
         (Decode.field "name" (Decode.maybe Decode.string))
         (Decode.field "description" (Decode.maybe Decode.string))
-        (Decode.field "parameters" (Decode.maybe Decode.value))
+        (Decode.field "parameters" (Decode.maybe (Decode.value |> Decode.map (Encode.encode 0))))
 
 
 decodeIntOrInf : Decode.Decoder IntOrInf
